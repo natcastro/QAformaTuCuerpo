@@ -1,0 +1,109 @@
+    <!doctype html>
+    <html lang="es">
+    <head>
+    <meta charset="utf-8" />
+    <title>Detalle evaluación</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    </head>
+    <body class="app-shell">
+    <header class="topbar">
+        <div class="topbar-inner">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <div class="logo-mark"><div class="logo-dot"></div></div>
+            <div class="topbar-title">
+            <span>QA CENTER</span>
+            <span>Detalle de evaluación</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="topbar-user">
+            <span><%= currentUser.name %></span>
+            <span style="font-size:11px; padding:2px 8px; border-radius:999px; background:#e0f2fe; color:#0369a1;">
+                <%= currentUser.role %>
+            </span>
+            </div>
+            <% if (currentUser.role === 'user') { %>
+            <a href="/me" class="btn btn-ghost btn-xs">Volver</a>
+            <% } else { %>
+            <a href="/manager" class="btn btn-ghost btn-xs">Volver</a>
+            <% } %>
+            <a href="/logout" class="btn btn-ghost btn-xs">Salir</a>
+        </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="wrap">
+        <section class="card">
+            <div class="card-c">
+            <h1>Evaluación de <%= evaluation.evaluated_name %></h1>
+            <p>
+                Evaluador: <strong><%= evaluation.evaluator_name %></strong><br />
+                Canal:
+                <span class="badge secondary">
+                <%= evaluation.channel === 'call' ? 'Llamada' : 'Chat' %>
+                </span><br />
+                Fecha:
+                <%= new Date(evaluation.created_at).toLocaleString("es-ES", {
+                    dateStyle: "medium",
+                    timeStyle: "short"
+                    }) %>
+            </p>
+
+            <div style="margin-top:12px;">
+                <span class="muted">Score total:</span>
+                <% if (evaluation.score >= 90) { %>
+                <span class="badge ok"><%= evaluation.score %>%</span>
+                <% } else if (evaluation.score >= 75) { %>
+                <span class="badge warn"><%= evaluation.score %>%</span>
+                <% } else { %>
+                <span class="badge bad"><%= evaluation.score %>%</span>
+                <% } %>
+            </div>
+
+            <% if (evaluation.general_notes) { %>
+                <div style="margin-top:14px;">
+                <span class="muted">Notas generales:</span>
+                <p><%= evaluation.general_notes %></p>
+                </div>
+            <% } %>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-h">Detalle por criterio</div>
+            <div class="card-c">
+            <div class="row" style="gap:12px;">
+                <% items.forEach(item => { %>
+                <div class="crit">
+                    <div>
+                    <div style="font-weight:600; font-size:14px;">
+                        <%= item.label %>
+                    </div>
+                    <% if (item.notes) { %>
+                        <p style="margin-top:6px;"><%= item.notes %></p>
+                    <% } %>
+                    </div>
+                    <div>
+                    <label>Peso</label>
+                    <div class="badge secondary"><%= item.weight %>%</div>
+                    </div>
+                    <div>
+                    <label>Calificación</label>
+                    <% if (item.grade === 'yes') { %>
+                        <div class="badge ok">Sí (100%)</div>
+                    <% } else if (item.grade === 'partial') { %>
+                        <div class="badge warn">Parcial (50%)</div>
+                    <% } else { %>
+                        <div class="badge bad">No (0%)</div>
+                    <% } %>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+            </div>
+        </section>
+        </div>
+    </main>
+    </body>
+    </html>

@@ -1,0 +1,38 @@
+    <!doctype html>
+    <html lang="es">
+    <head>
+    <meta charset="utf-8" />
+    <title>Login QA Center</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    </head>
+    <body class="app-shell">
+    <main class="main">
+        <div class="wrap-sm">
+        <div class="login-card">
+            <h1 class="login-title">Centro de Evaluaciones QA</h1>
+            <p class="login-subtitle">Inicia sesión para continuar</p>
+
+            <% if (error) { %>
+            <p class="text-error"><%= error %></p>
+            <% } %>
+
+            <form action="/login" method="post" style="margin-top:14px;">
+            <div style="margin-bottom:10px;">
+                <label>Usuario</label>
+                <input type="text" name="username" autocomplete="username" />
+            </div>
+
+            <div style="margin-bottom:16px;">
+                <label>Contraseña</label>
+                <input type="password" name="password" autocomplete="current-password" />
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width:100%;">
+                Continuar
+            </button>
+            </form>
+        </div>
+        </div>
+    </main>
+    </body>
+    </html>

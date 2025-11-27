@@ -1,0 +1,69 @@
+    <!doctype html>
+    <html lang="es">
+    <head>
+    <meta charset="utf-8" />
+    <title>Panel Manager</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    </head>
+    <body class="app-shell">
+    <header class="topbar">
+        <div class="topbar-inner">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <div class="logo-mark"><div class="logo-dot"></div></div>
+            <div class="topbar-title">
+            <span>QA CENTER</span>
+            <span>Panel de manager</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="topbar-user">
+            <span><%= currentUser.name %></span>
+            <span style="font-size:11px; padding:2px 8px; border-radius:999px; background:#e0f2fe; color:#0369a1;">
+                <%= currentUser.role %>
+            </span>
+            </div>
+            <a href="/logout" class="btn btn-ghost btn-xs">Salir</a>
+        </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="wrap">
+        <section class="card">
+            <div class="card-c">
+            <h1>Resumen</h1>
+            <p>Gestiona evaluaciones y usuarios desde un panel limpio y sencillo.</p>
+
+            <div class="row row-2" style="margin-top:14px;">
+                <div class="card">
+                <div class="card-c">
+                    <h2>Nueva evaluación</h2>
+                    <p>Crea una evaluación para llamadas o chats.</p>
+                    <a href="/evaluations/new" class="btn btn-primary">Crear evaluación</a>
+                </div>
+                </div>
+
+                <% if (currentUser.role === 'manager_plus') { %>
+                <div class="card">
+                    <div class="card-c">
+                    <h2>Usuarios</h2>
+                    <p>Crear, eliminar y gestionar managers y agentes.</p>
+                    <a href="/users" class="btn btn-primary">Gestionar usuarios</a>
+                    </div>
+                </div>
+                <% } else { %>
+                <div class="card">
+                    <div class="card-c">
+                    <h2>Usuarios</h2>
+                    <p>Solo el Manager Plus puede administrar usuarios.</p>
+                    <button class="btn btn-ghost" disabled>Sin permisos</button>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+            </div>
+        </section>
+        </div>
+    </main>
+    </body>
+    </html>

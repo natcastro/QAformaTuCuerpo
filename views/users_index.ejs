@@ -1,0 +1,101 @@
+    <!doctype html>
+    <html lang="es">
+    <head>
+    <meta charset="utf-8" />
+    <title>Gestión de usuarios</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    </head>
+    <body class="app-shell">
+    <header class="topbar">
+        <div class="topbar-inner">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <div class="logo-mark"><div class="logo-dot"></div></div>
+            <div class="topbar-title">
+            <span>QA CENTER</span>
+            <span>Gestión de usuarios</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <a href="/manager" class="btn btn-ghost btn-xs">Volver al panel</a>
+            <a href="/logout" class="btn btn-ghost btn-xs">Salir</a>
+        </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="wrap">
+        <section class="card">
+            <div class="card-h">Crear nuevo usuario</div>
+            <div class="card-c">
+            <form action="/users" method="post" class="row row-2">
+                <div>
+                <label>Nombre</label>
+                <input type="text" name="name" required />
+                </div>
+                <div>
+                <label>Email</label>
+                <input type="email" name="email" required />
+                </div>
+                <div>
+                <label>Username</label>
+                <input type="text" name="username" required />
+                </div>
+                <div>
+                <label>Password</label>
+                <input type="text" name="password" required />
+                </div>
+                <div>
+                <label>Rol</label>
+                <select name="role">
+                    <option value="user">user</option>
+                    <option value="manager">manager</option>
+                    <option value="manager_plus">manager_plus</option>
+                </select>
+                </div>
+                <div style="display:flex; align-items:flex-end; justify-content:flex-end;">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-h">Usuarios registrados</div>
+            <div class="card-c">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Rol</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% users.forEach(u => { %>
+                    <tr>
+                    <td><%= u.id %></td>
+                    <td><%= u.name %></td>
+                    <td><%= u.email %></td>
+                    <td><%= u.username %></td>
+                    <td><%= u.role %></td>
+                    <td>
+                        <form action="/users/<%= u.id %>/delete" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-xs"
+                            onclick="return confirm('¿Borrar usuario <%= u.name %>?')">
+                            Borrar
+                        </button>
+                        </form>
+                    </td>
+                    </tr>
+                <% }) %>
+                </tbody>
+            </table>
+            </div>
+        </section>
+        </div>
+    </main>
+    </body>
+    </html>

@@ -1,0 +1,94 @@
+    <!doctype html>
+    <html lang="es">
+    <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nueva evaluación</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    </head>
+    <body class="app-shell">
+    <header class="topbar">
+        <div class="topbar-inner">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <div class="logo-mark"><div class="logo-dot"></div></div>
+            <div class="topbar-title">
+            <span>QA CENTER</span>
+            <span>Nueva evaluación</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="topbar-user">
+            <span><%= currentUser.name %></span>
+            <span style="font-size:11px; padding:2px 8px; border-radius:999px; background:#e0f2fe; color:#0369a1;">
+                <%= currentUser.role %>
+            </span>
+            </div>
+            <a href="/manager" class="btn btn-ghost btn-xs">Volver</a>
+            <a href="/logout" class="btn btn-ghost btn-xs">Salir</a>
+        </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="wrap">
+        <header>
+            <h1>Centro de Evaluaciones QA</h1>
+            <p>Evalúa <strong>llamadas</strong> y <strong>chats</strong> con una rúbrica porcentual.</p>
+        </header>
+
+        <section class="card">
+            <div class="card-h">Metadatos</div>
+            <div class="card-c">
+            <div class="row row-3">
+                <div>
+                <label>Agente</label>
+                <select id="agent">
+                    <option value="">Selecciona agente</option>
+                    <% agents.forEach(a => { %>
+                    <option value="<%= a.id %>"><%= a.name %></option>
+                    <% }) %>
+                </select>
+                </div>
+                <div>
+                <label>Canal</label>
+                <div class="tabs">
+                    <button class="tab active" data-channel="call">Llamada</button>
+                    <button class="tab" data-channel="chat">Chat</button>
+                </div>
+                </div>
+                <div>
+                <label>Email del evaluador</label>
+                <input id="evaluatorEmail" placeholder="mario@tuempresa.com" />
+                </div>
+            </div>
+            </div>
+        </section>
+
+        <section id="rubricCard" class="card">
+            <div class="card-h">Checklist y ponderación</div>
+            <div class="card-c" id="rubricContainer"></div>
+        </section>
+
+        <section class="card">
+            <div class="card-h">Notas generales</div>
+            <div class="card-c">
+            <textarea id="generalNotes" rows="4" placeholder="Observaciones, coaching y plan de mejora"></textarea>
+            </div>
+        </section>
+
+        <div class="actions">
+            <div>
+            <span class="muted">Peso total:</span>
+            <span class="badge secondary" id="weightBadge">100%</span>
+            <span class="muted" style="margin-left:12px">Puntaje:</span>
+            <span class="badge ok" id="scoreBadge">100%</span>
+            <div class="bar" style="margin-top:8px;max-width:320px"><span id="scoreBar" style="width:100%"></span></div>
+            </div>
+            <button class="btn btn-primary" id="submitBtn">Submit evaluación</button>
+        </div>
+        </div>
+    </main>
+
+    <script src="/js/evaluation.js"></script>
+    </body>
+    </html>

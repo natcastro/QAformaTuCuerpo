@@ -1,0 +1,87 @@
+    <!doctype html>
+    <html lang="es">
+    <head>
+    <meta charset="utf-8" />
+    <title>Mis Evaluaciones</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    </head>
+    <body class="app-shell">
+    <header class="topbar">
+        <div class="topbar-inner">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <div class="logo-mark"><div class="logo-dot"></div></div>
+            <div class="topbar-title">
+            <span>QA CENTER</span>
+            <span>Mis evaluaciones</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div class="topbar-user">
+            <span><%= currentUser.name %></span>
+            <span style="font-size:11px; padding:2px 8px; border-radius:999px; background:#e0f2fe; color:#0369a1;">
+                user
+            </span>
+            </div>
+            <a href="/logout" class="btn btn-ghost btn-xs">Salir</a>
+        </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="wrap">
+        <section class="card">
+            <div class="card-c">
+            <h1>Hola, <%= currentUser.name %></h1>
+            <p>Aquí puedes ver las evaluaciones que te han realizado.</p>
+
+            <% if (!evaluations || evaluations.length === 0) { %>
+                <p class="muted" style="margin-top:16px;">Todavía no tienes evaluaciones.</p>
+            <% } else { %>
+                <table class="table" style="margin-top:16px;">
+                <thead>
+                    <tr>
+                    <th>Fecha</th>
+                    <th>Canal</th>
+                    <th>Score</th>
+                    <th>Evaluador</th>
+                    <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% evaluations.forEach(ev => { %>
+                    <tr>
+                        <td>
+                        <%= new Date(ev.created_at).toLocaleString("es-ES", {
+                                dateStyle: "medium",
+                                timeStyle: "short"
+                            }) %>
+                        </td>
+                        <td>
+                        <span class="badge secondary">
+                            <%= ev.channel === 'call' ? 'Llamada' : 'Chat' %>
+                        </span>
+                        </td>
+                        <td>
+                        <% if (ev.score >= 90) { %>
+                            <span class="badge ok"><%= ev.score %>%</span>
+                        <% } else if (ev.score >= 75) { %>
+                            <span class="badge warn"><%= ev.score %>%</span>
+                        <% } else { %>
+                            <span class="badge bad"><%= ev.score %>%</span>
+                        <% } %>
+                        </td>
+                        <td><%= ev.evaluator_name %></td>
+                        <td style="text-align:right;">
+                        <a href="/evaluations/<%= ev.id %>" class="btn btn-ghost btn-xs">Ver detalles</a>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+                </table>
+            <% } %>
+            </div>
+        </section>
+        </div>
+    </main>
+    </body>
+    </html>
